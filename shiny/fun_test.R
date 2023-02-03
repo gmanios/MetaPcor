@@ -25,6 +25,26 @@ memory.limit(size = 1000000000000000000000000000)
 options(repos = BiocManager::repositories())
 
 memory.limit(size = 100000)
+readfiles <- function(path){
+  x<- read_xlsx(path)
+  study_t <-data.frame(x)
+  # study_t <- study_t[1:100,]
+  study_t <- study_t[-1,]
+
+  study_t <- t(study_t)
+  colnames(study_t) <- study_t[1,]
+  study_t<- study_t[-1,]
+  study_t<- as.data.table(study_t)[, lapply(.SD, as.numeric)]
+
+
+
+  # # Convert each column from character to numeric
+  # xt <- xt[, lapply(.SD, as.numeric)]
+
+
+  return (study_t)
+
+}
 
 # User choose folder path of expression data or geo names for the meta- analysis
 load_GSE_data <- function(file_names){
@@ -32,10 +52,18 @@ load_GSE_data <- function(file_names){
   list_of_files <- list()
   for(i in 1:length(file_names)){
     print(as.vector(file_names[[i]]))
-    tmp <- as.data.table(read_excel(as.vector(file_names[[i]])))
+    # tmp <- as.data.table(read_excel(as.vector(file_names[[i]])))
+    x<- read_xlsx(as.vector(file_names[[i]]))
+    study_t <-data.frame(x)
+    # study_t <- study_t[1:100,]
+    study_t <- study_t[-1,]
 
+    study_t <- t(study_t)
+    colnames(study_t) <- study_t[1,]
+    study_t<- study_t[-1,]
+    study_t<- as.data.table(study_t)[, lapply(.SD, as.numeric)]
 
-    list_of_files<- append(list_of_files,list(as.data.table(tmp)))
+    list_of_files<- append(list_of_files,list(as.data.table(study_t)))
   }
 
   return (list_of_files)
