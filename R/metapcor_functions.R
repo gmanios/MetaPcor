@@ -21,12 +21,35 @@ library(readxl)
 library(DExMA)
 memory.limit(99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999)
 # User choose folder path of expression data or geo names for the meta- analysis
+
+readfiles <- function(path){
+  x<- read_xlsx(path)
+  study_t <-data.frame(x)
+  # study_t <- study_t[1:100,]
+  study_t <- study_t[-1,]
+  
+  study_t <- t(study_t)
+  colnames(study_t) <- study_t[1,]
+  study_t<- study_t[-1,]
+  study_t<- as.data.table(study_t)[, lapply(.SD, as.numeric)]
+  
+  
+  
+  # # Convert each column from character to numeric
+  # xt <- xt[, lapply(.SD, as.numeric)]
+  
+  
+  return (study_t)
+  
+}
+
+
 load_GSE_data <- function(folder_path=NULL, GEO_names=NULL, GPL_list= NULL, target_namespace = NULL){   
   if (!is.null(folder_path) & is.null(GEO_names)){
     
     file_names<-dir(path = folder_path)
     setwd(folder_path)
-    list_of_files<-lapply(file_names, read.table)
+    list_of_files<-lapply(file_names, readfiles)
     
   }
   else if(!is.null(GEO_names) & is.null(folder_path)) {
