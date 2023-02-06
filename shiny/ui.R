@@ -30,7 +30,7 @@ ui <- fluidPage(
       #           value = "Data Summary"),
 
 
-      fileInput("upload", NULL, buttonLabel = "Upload .xlsx file(s)", multiple = TRUE),
+      fileInput("upload", NULL, buttonLabel = "Upload GSE Matrix file(s)", multiple = TRUE),
       tableOutput("files"),
 
 
