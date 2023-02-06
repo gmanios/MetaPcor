@@ -20,10 +20,12 @@ library(plotly)
 library(readxl)
 library(DExMA)
 memory.limit(99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999)
-# User choose folder path of expression data or geo names for the meta- analysis
 
+
+# User choose folder path of expression data or geo names for the meta- analysis
 readfiles <- function(path){
-  x<- read_xlsx(path)
+  x<- read.table(path,sep ='\t',header = TRUE)
+  
   study_t <-data.frame(x)
   # study_t <- study_t[1:100,]
   study_t <- study_t[-1,]
@@ -43,7 +45,7 @@ readfiles <- function(path){
   
 }
 
-
+# User choose folder path of expression data or geo names for the meta- analysis
 load_GSE_data <- function(folder_path=NULL, GEO_names=NULL, GPL_list= NULL, target_namespace = NULL){   
   if (!is.null(folder_path) & is.null(GEO_names)){
     
@@ -442,129 +444,6 @@ adjmatrix_to_edgelist<-function(mat){
   return(data.table(obj))
 }
 
-meta_pcor <- function(folder_path=NULL, GEO_names=NULL, GPL_list= NULL, my_list=NULL, option, method, meta_method= "random", pvalue_thres = NULL, fdr_thres = NULL, coef_thres = NULL,l1  = NULL ,l2 = NULL ){
-  
-  value1 = pvalue_thres
-  value2 = fdr_thres
-  value3 = coef_thres
-  value4 = l1
-  value5 = l2
-  
-  
-  # Meta-analysis and partial correlation meta-analysis (folderpath needed)
-  if (option == 4 ){
-    
-    # Meta-analysis with DExMA
-    DEG_meta_result = DEG_meta(value6 ,cases = 'CASE', controls = 'CONTROL')
-    
-    
-    list_of_studies = DEG_meta_result[[2]]
-    
-    
-    # Calculate partial correlation without thresholds 
-    if (method == 'sparse'){
-      
-      pcor_list <- pcor_neighborhood(list_of_files = list_of_studies, l1 = value4, l2 = value5, significant=FALSE, pvalue_thres=value1, fdr_thres=value2, coef_thres=value3)      
-      
-    }
-    else if (method == 'shrinkage') {
-      pcor_list <- pcor_shrinkage(list_of_files = list_of_studies, significant=FALSE, pvalue_thres=value1, fdr_thres=value2, coef_thres=value3)      
-      
-    }
-    
-    #Perform meta-analysis of correlations coefficients
-    
-    meta_cor  <- my_meta(correlations = pcor_list, method=meta_method)
-    
-    return(meta_cor)
-    
-  }
-  
-  
-  
-  
-  list_of_files<-load_GSE_data(folder_path, GEO_names, GPL_list, target_namespace)
-  
-  if (option ==1){
-    ##################################################
-    #                   Option 1                     #
-    ##################################################
-    
-    
-    # Calculate Pearson's correlation coefficients and
-    # perform  meta-analysis
-    pearson_meta_cor <- calc_pearson_metacor(list_of_files = list_of_files,pvalue_thres = value1 ,fdr_thres =  value2 ,coef_thres = value3 )
-    
-    
-    # Return a cropped list of studies (with significant correlations pairs which occurred either from meta-analysis or cut-offs)
-    # to calculate partial correlations or conduct meta-analysis with the metacor package
-    result <- keep_sig_pairs (list_of_studies = list_of_files, sig_data = pearson_meta_cor)
-    
-    # Calculate sparse partial correlation estimation with neighborhood selection approach method for each study
-    
-    if (method == 'sparse') {
-      # We do not want any cut offs when significant == FALSE
-      pcor_list <- pcor_neighborhood(list_of_files = result, l1 = value4, l2 = value5, significant=FALSE, pvalue_thres=NULL, fdr_thres=NULL, coef_thres=NULL)
-    }
-    else if (method == 'shrinkage'){
-      pcor_list <- pcor_shrinkage(list_of_files = result, significant= FALSE , pvalue_thres = NULL, fdr_thres = NULL , coef_thres = NULL )
-      
-    }
-    
-    # Perform meta-analysis of correlations coefficients
-    meta_cor  <- my_meta(correlations = pcor_list, method=meta_method)
-    
-    return(meta_cor)
-    
-  }
-  
-  
-  if (option ==2) {
-    
-    # Calculate partial correlation with thresholds 
-    if (method == 'sparse'){
-      
-      pcor_list <- pcor_neighborhood(list_of_files = list_of_files, l1 = value4, l2 = value5, significant=TRUE, pvalue_thres=value1, fdr_thres=value2, coef_thres=value3)      
-      
-    }
-    else if (method == 'shrinkage') {
-      pcor_list <- pcor_shrinkage(list_of_files = list_of_files, significant=TRUE, pvalue_thres=value1, fdr_thres=value2, coef_thres=value3)      
-      
-    }
-    
-    #print(pcor_list)
-    
-    # Perform meta-analysis of correlations coefficients
-    meta_cor  <- my_meta(correlations = pcor_list, method=meta_method)
-    
-    return(meta_cor)
-    
-  }
-  
-  
-  if (option ==3) {
-    
-    # Calculate partial correlation with thresholds 
-    if (method == 'sparse'){
-      
-      pcor_list <- pcor_neighborhood(list_of_files = list_of_files, l1 = value4, l2 = value5, significant=FALSE, pvalue_thres=value1, fdr_thres=value2, coef_thres=value3)      
-      
-    }
-    else if (method == 'shrinkage') {
-      pcor_list <- pcor_shrinkage(list_of_files = list_of_files, significant=FALSE, pvalue_thres=value1, fdr_thres=value2, coef_thres=value3)      
-      
-    }
-    
-    #Perform meta-analysis of correlations coefficients
-    
-    meta_cor  <- my_meta(correlations = pcor_list, method=meta_method)
-    
-    return(meta_cor)
-    
-  }
-  
-  
-}
 
 run_metacor <- function (correlations){
   
@@ -692,26 +571,20 @@ meta_pcor <- function(folder_path=NULL, GEO_names=NULL, GPL_list= NULL, target_n
     
     # Meta-analysis with DExMA
     
-    DEG_meta_result = DEG_meta(value6 ,cases = 'CASE', controls = 'CONTROL')
-    list_of_studies = DEG_meta_result[[2]]
+    DEG_simple <- DE_analysis(folder_path = value6 ,case = 'CASE', control = 'CONTROL', l1 = 0.6 , fold_threshold = 0.05, p_value_threshold = 0.05 )
     
+    # 
+    # # Calculate partial correlation without thresholds 
+    # 
+    #   
+    # pcor_list <- pcor_neighborhood(list_of_files = list_of_studies, l1 = value4, l2 = value5, significant=FALSE, pvalue_thres=value1, fdr_thres=value2, coef_thres=value3)      
+    # 
+    # 
+    # #Perform meta-analysis of correlations coefficients
+    # 
+    # meta_cor  <- my_meta(correlations = pcor_list, method=meta_method)
     
-    # Calculate partial correlation without thresholds 
-    if (method == 'sparse'){
-      
-      pcor_list <- pcor_neighborhood(list_of_files = list_of_studies, l1 = value4, l2 = value5, significant=FALSE, pvalue_thres=value1, fdr_thres=value2, coef_thres=value3)      
-      
-    }
-    else if (method == 'shrinkage') {
-      pcor_list <- pcor_shrinkage(list_of_files = list_of_studies, significant=FALSE, pvalue_thres=value1, fdr_thres=value2, coef_thres=value3)      
-      
-    }
-    
-    #Perform meta-analysis of correlations coefficients
-    
-    meta_cor  <- my_meta(correlations = pcor_list, method=meta_method)
-    
-    return(meta_cor)
+    return(DEG_simple)
     
   }
   
@@ -934,4 +807,160 @@ volc_plot_plotly<- function(pcor,pval_thres,coeff_thres){
   return (p)
   
 }
+
+
+DE_analysis <- function(folder_path,case,control, fold_threshold,p_value_threshold,l1 ){
+  
+  expr_mat = list()
+  
+  list_of_studies = list.files(path = folder_path, pattern ='.txt', all.files=FALSE, full.names=TRUE)
+  
+  l1_value = l1
+  for (i in 1:length(list_of_studies)){
+    # Read the file
+    # inFile <- list_of_studies[i]
+    # old_name <- inFile$datapath
+    # dirstr <- dirname(inFile$datapath)
+    # new_name <- paste(dirstr, inFile$name,sep="/")
+    # file.rename(old_name, new_name)
+    print("Reading files")
+    print(as.vector(list_of_studies[[i]]))
+    study <- as.data.frame(read.table(as.vector(list_of_studies[[i]]),sep ='\t',header = TRUE))
+    
+    study_t <- study[-1,]
+    study_t <- t(study_t)
+    
+    colnames(study_t) <- study_t[1,]
+    study_t<- study_t[-1,]
+    rownames(study_t) <- 1:nrow(study_t)
+    study_t <- as.data.table(study_t)
+    
+    study_t <- lapply(study_t,as.numeric)
+    study_t <- as.data.table(study_t)
+    
+    study <- as.data.frame(study)
+    
+    # Split cases and controls
+    cases <- study [,(study[1,]) == 'CASE' ]
+    controls <- study [,(study[1,]) == 'CONTROL']
+    
+    
+    
+    
+    
+    # Delete first row (we don't need the annotation row now )
+    cases <- cases[-1,]
+    rownames(cases) <- colnames(study_t)
+    cases<- t(cases)
+    # colnames(cases) <- cases[1,]
+    # cases<- cases[-1,]
+    # rownames(cases) <- 1:nrow(cases)
+    # cases <- as.data.frame(cases)
+    #
+    
+    
+    controls <- controls[-1,]
+    rownames(controls) <- colnames(study_t)
+    
+    controls<- t(controls)
+    
+    
+    cases <- matrix(as.numeric(cases),    # Convert to numeric matrix
+                    ncol = ncol(cases))
+    colnames(cases) <- colnames(study_t)
+    
+    
+    controls <- matrix(as.numeric(controls),    # Convert to numeric matrix
+                       ncol = ncol(controls))
+    colnames(controls) <- colnames(study_t)
+    
+    
+    
+    
+    # Apply log2 scale in cases and controls
+    controls <- log2(controls)
+    cases <- log2(cases)
+    
+    print(cases)
+    print(controls)
+    # Calculate the means of each group
+    
+    group1 <- apply(t(cases), 1, mean)
+    group2 <- apply(t(controls), 1, mean)
+    
+    
+    
+    ##keep the max of means
+    limit = max(group1, group2)
+    #limit
+    
+    # Compute fold-change for biological significance
+    # Difference between the means of the two conditions
+    fold = group1 - group2
+    #fold
+    
+    
+    
+    
+    
+    #pvalue
+    pvalue = NULL # Empty list for the p-values
+    tstat = NULL # Empty list of the t test statistics
+    
+    
+    
+    
+    for (i in 1: length(colnames(cases))){
+      t = t.test(cases[,i], controls[,i])
+      # Put the current p-value in the pvalues list
+      pvalue[i] = t$p.value
+      # Put the current t-statistic in the tstats list
+      tstat[i] = t$statistic
+    }
+    
+    #give your fold cutoff
+    fold_cutoff = fold_threshold
+    #give your pvalue cutoff
+    pvalue_cutoff = p_value_threshold
+    
+    
+    # Fold-change filter for biological significance
+    filter1 = abs(fold) >= fold_threshold
+    
+    
+    # P-value filter for statistical significance
+    filter2 = pvalue <= pvalue_cutoff
+    
+    names(filter2) <- names(filter1)
+    
+    cbind(filter1,filter2)
+    
+    # Combined filter
+    filter3 = filter1 & filter2
+    
+    
+    #filtered = study_t[filter3,]
+    sig = as.data.frame(filter3)
+    filtered = row.names(sig)[which(sig$filter3==TRUE)]
+    
+    # Finally we filtrer the dataset with the DE genes
+    final = t(t(study_t)[rownames(t(study_t)) %in% filtered,])
+    
+    final <- as.data.table(final)
+    expr_mat <- append(expr_mat,list(final))
+    
+  }
+  
+  #Sparse Correlation
+  pcor_list <- pcor_neighborhood(list_of_files = expr_mat, l1 = l1_value, l2 = 0, significant=FALSE)
+  
+  
+  
+  #Perform meta-analysis of correlations coefficients
+  
+  meta_cor  <- my_meta(correlations = pcor_list, method='random')
+  return(meta_cor)
+}
+
+
 
