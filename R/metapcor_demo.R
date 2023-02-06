@@ -7,6 +7,10 @@ source("metapcor_functions.R")
 #Run MetaPcor 
 pcor <- meta_pcor(GEO_names=c("GSE76427") ,target_namespace = c('ILLUMINA_HUMANHT_12_V4'), option=2, method="sparse", meta_method= "random", pvalue_thres = 0.01,l1  = 0.6 ,l2 = 0)
 
+#Run MetaPcor with option 4 (DE Analysis)
+#pcor <- meta_pcor(folder_path = 'studies/' , option=4, method="sparse", meta_method= "random",l1  = 0.6 ,l2 = 0)
+
+
 # Encrichment Analysis with gProfiler
 ea_results <- enrichment_analysis(as.data.frame(pcor))
 
