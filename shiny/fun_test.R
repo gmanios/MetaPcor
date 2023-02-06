@@ -26,7 +26,7 @@ options(repos = BiocManager::repositories())
 
 memory.limit(size = 100000)
 readfiles <- function(path){
-  x<- read_xlsx(path)
+  x<- read.table(path,sep ='\t',header = TRUE)
   study_t <-data.frame(x)
   # study_t <- study_t[1:100,]
   study_t <- study_t[-1,]
@@ -53,7 +53,7 @@ load_GSE_data <- function(file_names){
   for(i in 1:length(file_names)){
     print(as.vector(file_names[[i]]))
     # tmp <- as.data.table(read_excel(as.vector(file_names[[i]])))
-    x<- read_xlsx(as.vector(file_names[[i]]))
+    x<- read.table(as.vector(file_names[[i]]),sep ='\t',header = TRUE)
     study_t <-data.frame(x)
     # study_t <- study_t[1:100,]
     study_t <- study_t[-1,]
@@ -660,7 +660,7 @@ DE_analysis <- function(list_of_studies,case,control, fold_threshold,p_value_thr
     # file.rename(old_name, new_name)
     print("Reading files")
     print(as.vector(list_of_studies[[i]]))
-    study <- as.data.frame(read_xlsx(as.vector(list_of_studies[[i]])))
+    study <- as.data.frame(read.table(as.vector(list_of_studies[[i]]),sep ='\t',header = TRUE))
 
     study_t <- study[-1,]
     study_t <- t(study_t)
@@ -796,5 +796,6 @@ DE_analysis <- function(list_of_studies,case,control, fold_threshold,p_value_thr
   meta_cor  <- my_meta(correlations = pcor_list, method='random')
   return(meta_cor)
 }
+
 
 
