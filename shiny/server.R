@@ -63,7 +63,7 @@ server <- function(input, output) {
 
   )
 
-  output$files <- renderTable(input$upload)
+  output$files <- renderTable(input$upload[1:2])
 
 
   # When the button is pressed
