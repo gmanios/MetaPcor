@@ -25,6 +25,68 @@ memory.limit(size = 1000000000000000000000000000)
 options(repos = BiocManager::repositories())
 
 memory.limit(size = 100000)
+
+
+normalize_gse <- function(gse_matrix,norm_method) {
+
+  # RPKM normalization
+  if (norm_method == 'RPKM'){
+    num_GSE <- gse_matrix [,2:length(colnames(gse_matrix))]
+    total_counts <- colSums(num_GSE) # Calculate total counts for each sample
+    rpkm <- num_GSE / total_counts # Divide raw counts by total counts for each sample
+    rpkm <- cbind (gse_matrix$ID_REF,rpkm)
+    colnames(rpkm)[1] ="ID_REF"
+    norm <- rpkm
+
+  }
+
+
+
+
+  # Quantile normalization
+  if (norm_method == 'QUANT_NORM'){
+    quantile_norm <- t(apply(gse_matrix[, 2:ncol(gse_matrix)], 1, rank)) / ncol(gse_matrix[, 2:ncol(gse_matrix)])
+    quantile_norm <- as.data.table(cbind (gse_matrix$ID_REF,quantile_norm))
+    colnames(quantile_norm)[1] ="ID_REF"
+    norm <- quantile_norm
+  }
+
+
+  # Z-score standardization
+  if (norm_method == 'Z_SCOR_STAND'){
+    z_score <- t(t(scale(gse_matrix[, 2:ncol(gse_matrix)], center = TRUE, scale = TRUE)))
+    z_score <- as.data.table(cbind (gse_matrix$ID_REF,z_score))
+    colnames(z_score)[1] ="ID_REF"
+    norm <- z_score
+
+  }
+
+
+
+  # Z-score standardization
+  if (norm_method == 'LOG2'){
+    log2 <- t(t(log2(gse_matrix[, 2:ncol(gse_matrix)])))
+    log2 <- as.data.table(cbind (gse_matrix$ID_REF,log2))
+    colnames(log2)[1] ="ID_REF"
+    norm <- log2
+
+  }
+
+
+  return(norm)
+
+
+
+
+
+
+}
+
+
+
+
+
+
 readfiles <- function(path){
   x<- read.table(path,sep ='\t',header = TRUE)
   study_t <-data.frame(x)
@@ -56,8 +118,11 @@ load_GSE_data <- function(file_names){
     x<- read.table(as.vector(file_names[[i]]),sep ='\t',header = TRUE)
     study_t <-data.frame(x)
     # study_t <- study_t[1:100,]
-    study_t <- study_t[-1,]
 
+    # study_t <- study_t[-1,]
+
+    # Replace missing values with the mean of each column
+    study_t <- study_t %>% mutate_all(~ ifelse(is.na(.), mean(., na.rm = TRUE), .))
     study_t <- t(study_t)
     colnames(study_t) <- study_t[1,]
     study_t<- study_t[-1,]
@@ -140,10 +205,13 @@ pcor_shrinkage <-function (list_of_files, significant, pvalue_thres=NULL, fdr_th
 pcor_neighborhood<-function(list_of_files, l1, l2=0, significant, pvalue_thres=NULL, fdr_thres=NULL, coef_thres=NULL){
   pcor_list<-list()
 
+
+  print(significant)
   for(i in 1:length(list_of_files)){
-
+    print(head(t(list_of_files[[i]])))
+    print(l1)
+    print(l2)
     pcor1<-space.neighbor(list_of_files[[i]], lam1=l1, lam2=l2)$ParCor
-
     colnames(pcor1)<-rownames(pcor1)<- colnames(list_of_files[[i]])
     #pcor1<-melt(pcor1)
     pcor1<-adjmatrix_to_edgelist(pcor1)
@@ -196,12 +264,19 @@ pcor_neighborhood<-function(list_of_files, l1, l2=0, significant, pvalue_thres=N
         pcor1<-pcor1[which(pcor1$fdrs<fdr_thres & pcor1$pvalue<pvalue_thres & abs(pcor1$ri) > coef_thres),]
       }
       pcor1<-pcor1[,c("from","to","ri","ni")]
-    }
+      # Keep correlations above -1 and below 1
+      #pcor1 <- pcor1[ri <= 1 & ri >= -1]
 
+    }
+    # Keep correlations above -1 and below 1
+    # pcor1 <- pcor1[ri <= 1 & ri >= -1]
     pcor_list = append(pcor_list,list(pcor1))
   }
   # Merge the studies
   correlations = pcor_list %>% purrr::reduce(full_join, by = c("from","to"))
+  # correlations <- correlations[ri <= 1 & ri >= -1]
+  # Replace values above 1 with 1 and values below -1 with -1
+
   return(correlations)
 }
 
@@ -432,7 +507,7 @@ volc_plot_plotly<- function(pcor,pval_thres,coeff_thres){
 
 }
 
-meta_pcor <- function(file_names,  option, method, meta_method= "random", pvalue_thres = NULL, fdr_thres = NULL, coef_thres = NULL,l1  = NULL ,l2 = NULL ){
+meta_pcor <- function(file_names,  option, method, meta_method= "random", pvalue_thres = NULL, fdr_thres = NULL, coef_thres = NULL,l1  = NULL ,l2 = NULL, norm_data = NULL, norm_method = NULL){
 
   value1 = pvalue_thres
   value2 = fdr_thres
@@ -440,9 +515,10 @@ meta_pcor <- function(file_names,  option, method, meta_method= "random", pvalue
   value4 = l1
   value5 = l2
   value6 = file_names
+  value8 = norm_method
 
   # Meta-analysis and partial correlation meta-analysis (folderpath needed)
-  if (option == "Meta-anaysis and partial correlation meta-analysis" ){
+  if (option == "Meta-analysis and partial correlation meta-analysis" ){
 
     # Meta-analysis with DExMA
 
@@ -471,6 +547,10 @@ meta_pcor <- function(file_names,  option, method, meta_method= "random", pvalue
 
 
   list_of_files2<-load_GSE_data(file_names)
+
+  if (norm_data == 'YES'){
+    list_of_files2 <- lapply(list_of_files2, normalize_gse, value8)
+  }
   if (option =="Pearson correlation and partial correlation meta-analysis"){
     ##################################################
     #                   Option 1                     #
@@ -534,7 +614,7 @@ meta_pcor <- function(file_names,  option, method, meta_method= "random", pvalue
     if (method == 'sparse'){
 
       pcor_list <- pcor_neighborhood(list_of_files = list_of_files2, l1 = value4, l2 = 0, significant=FALSE, pvalue_thres=value1, fdr_thres=value2, coef_thres=value3)
-
+      print(pcor_list)
     }
     else if (method == 'shrinkage') {
       pcor_list <- pcor_shrinkage(list_of_files = list_of_files2, significant=FALSE, pvalue_thres=value1, fdr_thres=value2, coef_thres=value3)
@@ -544,6 +624,8 @@ meta_pcor <- function(file_names,  option, method, meta_method= "random", pvalue
     #Perform meta-analysis of correlations coefficients
 
     meta_cor  <- my_meta(correlations = pcor_list, method=meta_method)
+    # Remove rows where the value is the same in col1 and col2
+    meta_cor <- meta_cor[from != to]
 
     return(meta_cor)
 
@@ -796,6 +878,3 @@ DE_analysis <- function(list_of_studies,case,control, fold_threshold,p_value_thr
   meta_cor  <- my_meta(correlations = pcor_list, method='random')
   return(meta_cor)
 }
-
-
-
