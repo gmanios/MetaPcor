@@ -1,6 +1,7 @@
 library(shiny)
 source('fun_test.R')
 library(igraph)
+library(shinycssloaders)
 #library(networkD3)
 # Define UI for dataset viewer app ----
 ui <- fluidPage(
@@ -35,6 +36,14 @@ ui <- fluidPage(
 
 
 
+      # Input: Selector for choosing dataset ----
+      selectInput(inputId = "norm_data",
+                  label = "Normalize Data:",
+                  choices = c("NO", "YES")),
+      uiOutput("new_dropdown"),
+
+
+
 
       # Input: Selector for choosing dataset ----
       selectInput(inputId = "option",
@@ -43,27 +52,21 @@ ui <- fluidPage(
 
 
 
-      # Input: Selector for choosing dataset ----
       selectInput(inputId = "significant",
                   label = "Significant:",
-                  choices = c("TRUE", "FALSE")),
+                  choices = c("FALSE","TRUE")),
 
+      conditionalPanel(condition = "input.significant == 'TRUE'",
+                       numericInput(inputId = "pvalue_thres",
+                                    label = "p-value threshold:",
+                                    value = 0.01),
+                       numericInput(inputId = "fdr_thres",
+                                    label = "FDR threshold:",
+                                    value = NULL),
+                       numericInput(inputId = "coef_thres",
+                                    label = "Coefficient threshold:",
+                                    value = NULL)),
 
-
-      # Input: Numeric entry for number of obs to view ----
-      numericInput(inputId = "pvalue_thres",
-                   label = "p-value threshold:",
-                   value = 0.01),
-
-
-      # Input: Numeric entry for number of obs to view ----
-      numericInput(inputId = "fdr_thres",
-                   label = "FDR threshold:",
-                   value = NULL),
-      # Input: Numeric entry for number of obs to view ----
-      numericInput(inputId = "coef_thres",
-                   label = "Coefficient threshold:",
-                   value = NULL),
 
       # Input: Numeric entry for number of obs to view ----
       numericInput(inputId = "l1",
@@ -87,7 +90,7 @@ ui <- fluidPage(
                    label = "p-value threshold for Volcano plot",
                    value = 0.01),
 
-      actionButton("execute", "Execute the Main Function",style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
+      actionButton("execute", "Execute",style="color: #fff; background-color: #337ab7; border-color: #2e6da4"),
 
       #submitButton("Insert GEO accession numbers", icon("play"))
 
@@ -103,9 +106,17 @@ ui <- fluidPage(
 
       h4('You entered: '),
       verbatimTextOutput("oid1"),
-      #verbatimTextOutput("oid2")
+      conditionalPanel(condition="$('html').hasClass('shiny-busy')",
+                       tags$div(id = "loading-message",
+                                           style = "position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                                                    z-index: 10000; background-color: rgba(255, 255, 255, 0.7);
+                                                    padding: 20px; border-radius: 10px;",
+                                           tags$p("Loading...", style = "font-size: 18px; font-weight: bold; text-align: center;"))),
+
+
 
       DT::dataTableOutput("final_head"),
+
 
       downloadButton("downloadData", "Download meta-analysis results"),
 
@@ -134,7 +145,6 @@ ui <- fluidPage(
       # downloadButton("downloadVolcPlot", "Download Volcano plot"),
       # Output: Verbatim text for data summary ----
       # Output: HTML table with requested number of observations ----
-
     )
   )
 )
