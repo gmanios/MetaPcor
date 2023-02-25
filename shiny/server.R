@@ -39,7 +39,7 @@ server <- function(input, output) {
     cat("Analysis Option:\n")
     print(input$option)
 
-    cat("instaSignificant:\n")
+    cat("Significant:\n")
     print(input$significant)
     cat("P-value threshold:\n")
     print(input$pvalue_thres)
@@ -62,8 +62,21 @@ server <- function(input, output) {
   }
 
   )
-
+  new_dropdown_value <- reactive({
+    input$norm_method
+  })
   output$files <- renderTable(input$upload[1:2])
+  observeEvent(input$norm_data, {
+    if(input$norm_data == "YES") {
+      output$new_dropdown <- renderUI({
+        selectInput(inputId = "norm_method",
+                    label = "Normalization Method:",
+                    choices = c('RPKM', 'QUANT_NORM', 'Z_SCOR_STAND','LOG2'))
+      })
+    } else {
+      output$new_dropdown <- renderUI({})
+    }
+  })
 
 
   # When the button is pressed
@@ -86,12 +99,16 @@ server <- function(input, output) {
       }
       else{
         print("OK")
-        final<- meta_pcor(file_names = file_list, option=as.character(input$option), method = "sparse", meta_method= "random", pvalue_thres = input$pvalue_thres, fdr_thres = input$fdr_thres, coef_thres = input$coef_thres,l1  = input$l1 ,l2 = 0)
+        final<- meta_pcor(file_names = file_list, option=as.character(input$option), method = "sparse", meta_method= "random", pvalue_thres = input$pvalue_thres, fdr_thres = input$fdr_thres, coef_thres = input$coef_thres,l1  = input$l1 ,l2 = 0, norm_data = input$norm_data, norm_method = input$norm_method )
         print(final)
 
       }
 
       print(final)
+      # Hide the loading message
+      Sys.sleep(5)
+      tags$script(HTML("$('#loading-message').hide();"))
+      # tags$script(HTML("$('#loading-message').hide();"))
       output$final_head <- DT::renderDataTable({final})
 
       # Encrichment Analysis with gProfiler
@@ -191,13 +208,3 @@ server <- function(input, output) {
 
 
 }
-
-
-
-
-
-
-
-
-
-
