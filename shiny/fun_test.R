@@ -27,59 +27,43 @@ options(repos = BiocManager::repositories())
 memory.limit(size = 100000)
 
 
-normalize_gse <- function(gse_matrix,norm_method) {
+normalize_gse <- function(gse_matrix, norm_method) {
 
   # RPKM normalization
   if (norm_method == 'RPKM'){
-    num_GSE <- gse_matrix [,2:length(colnames(gse_matrix))]
+    num_GSE <- gse_matrix[, -1]
     total_counts <- colSums(num_GSE) # Calculate total counts for each sample
     rpkm <- num_GSE / total_counts # Divide raw counts by total counts for each sample
-    rpkm <- cbind (gse_matrix$ID_REF,rpkm)
-    colnames(rpkm)[1] ="ID_REF"
+    rpkm <- cbind(gse_matrix[, 1], rpkm)
+    # colnames(rpkm)[1] <- "ID_REF"
     norm <- rpkm
-
   }
-
-
-
 
   # Quantile normalization
   if (norm_method == 'QUANT_NORM'){
-    quantile_norm <- t(apply(gse_matrix[, 2:ncol(gse_matrix)], 1, rank)) / ncol(gse_matrix[, 2:ncol(gse_matrix)])
-    quantile_norm <- as.data.table(cbind (gse_matrix$ID_REF,quantile_norm))
-    colnames(quantile_norm)[1] ="ID_REF"
+    quantile_norm <- t(apply(gse_matrix[, -1], 1, rank)) / ncol(gse_matrix[, -1])
+    quantile_norm <- as.data.table(cbind(gse_matrix[, 1], quantile_norm))
+    # colnames(quantile_norm)[1] <- "ID_REF"
     norm <- quantile_norm
   }
 
-
   # Z-score standardization
   if (norm_method == 'Z_SCOR_STAND'){
-    z_score <- t(t(scale(gse_matrix[, 2:ncol(gse_matrix)], center = TRUE, scale = TRUE)))
-    z_score <- as.data.table(cbind (gse_matrix$ID_REF,z_score))
-    colnames(z_score)[1] ="ID_REF"
+    z_score <- t(t(scale(gse_matrix[, -1], center = TRUE, scale = TRUE)))
+    z_score <- as.data.table(cbind(gse_matrix[, 1], z_score))
+    # colnames(z_score)[1] <- "ID_REF"
     norm <- z_score
-
   }
 
-
-
-  # Z-score standardization
+  # Log2 transformation
   if (norm_method == 'LOG2'){
-    log2 <- t(t(log2(gse_matrix[, 2:ncol(gse_matrix)])))
-    log2 <- as.data.table(cbind (gse_matrix$ID_REF,log2))
-    colnames(log2)[1] ="ID_REF"
+    log2 <- t(t(log2(gse_matrix[, -1])))
+    log2 <- as.data.table(cbind(gse_matrix[, 1], log2))
+    # colnames(log2)[1] <- "ID_REF"
     norm <- log2
-
   }
-
 
   return(norm)
-
-
-
-
-
-
 }
 
 
@@ -128,6 +112,7 @@ load_GSE_data <- function(file_names){
     study_t<- study_t[-1,]
     study_t<- as.data.table(study_t)[, lapply(.SD, as.numeric)]
 
+    print(study_t)
     list_of_files<- append(list_of_files,list(as.data.table(study_t)))
   }
 
@@ -551,6 +536,7 @@ meta_pcor <- function(file_names,  option, method, meta_method= "random", pvalue
   if (norm_data == 'YES'){
     list_of_files2 <- lapply(list_of_files2, normalize_gse, value8)
   }
+  print(list_of_files2)
   if (option =="Pearson correlation and partial correlation meta-analysis"){
     ##################################################
     #                   Option 1                     #
