@@ -25,13 +25,51 @@ library(Cairo)
 library(networkD3)
 options(bitmapType='cairo')
 memory.limit(size = 100000)
-#Limit of each file for server : 80MB for each file
+#Limit of each file for server : 800MB for each file
 options(shiny.maxRequestSize=800*1024^2)
 
 source('fun_test.R')
 # Define server logic to summarize and view selected dataset ----
 server <- function(input, output) {
 
+  output$download_example <- downloadHandler(
+    filename = "GSE_demo.txt",
+    content = function(file) {
+      # Path to the example data file
+      example_file <- "GSE_demo.txt"
+
+      # Copy the example data file to the download destination
+      file.copy(example_file, file)
+    }
+  )
+
+
+  output$download_example_de <- downloadHandler(
+    filename = "GSE_demo_DE.txt",
+    content = function(file) {
+      # Path to the example data file
+      example_file <- "GSE_demo_DE.txt"
+
+      # Copy the example data file to the download destination
+      file.copy(example_file, file)
+    }
+  )
+
+  # # Define a function to create a zip file
+  # createZip <- function() {
+  #   zip_file <- "data_examples.zip"
+  #   dir_path <- "data_examples"
+  #   zip(zip_file, files = list.files(dir_path, full.names = TRUE))
+  #   return(zip_file)
+  # }
+  # output$download_examples <- downloadHandler(
+  #   filename = function() {
+  #     "example_files.zip"
+  #   },
+  #   content = function(file) {
+  #     file.copy(createZip(), file)
+  #   }
+  # )
 
   output$oid1 <- renderPrint({
     cat("MetaPcor: A package for meta-analysis of Gene Expression studies with partial correlation as effect size\n\n")
