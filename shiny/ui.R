@@ -24,7 +24,13 @@ ui <- fluidPage(
 
       # Change sidebar color
       tags$style(".well {background-color:#EBECF0;}"),
+
       helpText("Choose your analysis settings to proceed"),
+      # helpText("For partial correlation meta-analysis, this is the proposed input"),
+      #
+      #
+      # helpText("For DE and partial correlation meta-analysis, this is the proposed input"),
+      #
 
       # textInput(inputId = "caption",
       #           label = "Caption:",
@@ -33,9 +39,16 @@ ui <- fluidPage(
 
       fileInput("upload", NULL, buttonLabel = "Upload GSE Matrix file(s)", multiple = TRUE),
       tableOutput("files"),
+      # Add a download button for the example file
+      helpText("Download a GSE Matrix file"),
 
+      downloadButton("download_example", "GSE_matrix example"),
 
+      helpText("Download a GSE Matrix for DE and partial correlation meta-analysis"),
 
+      # Add a download button for the example file
+      downloadButton("download_example_de", "GSE_matrix DE example"),
+      # downloadButton("download_examples", "Download Example Files (.zip)"),
       # Input: Selector for choosing dataset ----
       selectInput(inputId = "norm_data",
                   label = "Normalize Data:",
@@ -51,6 +64,7 @@ ui <- fluidPage(
                   choices = c("Partial correlation meta-analysis with thresholds", "Partial correlation meta-analysis","DE and partial correlation meta-analysis")),
 
 
+      helpText("Keep the statistically significant correlations to proceed in the meta-analysis"),
 
       selectInput(inputId = "significant",
                   label = "Significant:",
