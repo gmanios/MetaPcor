@@ -53,7 +53,18 @@ Install the required packages
 ```R
 library(devtools)
 
-install.packages(c("readxl", "igraph", "visNetwork", "plotly", "GGally", "ggrepel", "gprofiler2", "matrixcalc", "ff", "bit", "DescTools", "forcats", "stringr", "purrr", "readr", "tidyr", "tibble", "ggplot2", "tidyverse", "dplyr", "plyr", "metafor", "metadat", "Matrix", "meta", "GeneNet", "fdrtool", "longitudinal", "data.table", "corpcor"), 
+install.packages(c("readxl", "igraph", "visNetwork",
+                   "plotly", "GGally", "ggrepel",
+                   "gprofiler2", "matrixcalc", 
+                   "ff", "bit", "DescTools",
+                   "forcats", "stringr",
+                   "purrr", "readr",
+                   "tidyr", "tibble","ggplot2", 
+                   "tidyverse", "dplyr",
+                   "plyr", "metafor", "metadat", 
+                   "Matrix", "meta", "GeneNet",
+                   "fdrtool", "longitudinal", 
+                   "data.table", "corpcor"), 
                  dependencies = TRUE)
                  
                  
