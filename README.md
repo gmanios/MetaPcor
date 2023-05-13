@@ -50,7 +50,7 @@ First of all, make sure the required packages that are metnioned above are insta
 
 Install the required packages
 
-```{r}
+```R
 library(devtools)
 
 install.packages(c("readxl", "igraph", "visNetwork", "plotly", "GGally", "ggrepel", "gprofiler2", "matrixcalc", "ff", "bit", "DescTools", "forcats", "stringr", "purrr", "readr", "tidyr", "tibble", "ggplot2", "tidyverse", "dplyr", "plyr", "metafor", "metadat", "Matrix", "meta", "GeneNet", "fdrtool", "longitudinal", "data.table", "corpcor"), 
@@ -69,7 +69,7 @@ BiocManager::install("DExMA")
 
 ```
 Install MetaPcor from GitHub
-```{r}
+```R
 devtools::install_github("gmanios/MetaPcor") 
 ```
 
