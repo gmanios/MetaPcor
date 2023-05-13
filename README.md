@@ -42,3 +42,35 @@ Web version of MetaPcor available at : http://rs.dib.uth.gr:3839/metapcor/metapc
 * GEOquery 2.66.0
 * Biobase 2.58.0
 * BiocGenerics 0.44.0
+
+
+## Installation Guide
+
+First of all, make sure the required packages that are metnioned above are installed. 
+
+Install the required packages
+
+```{r}
+library(devtools)
+
+install.packages(c("readxl", "igraph", "visNetwork", "plotly", "GGally", "ggrepel", "gprofiler2", "matrixcalc", "ff", "bit", "DescTools", "forcats", "stringr", "purrr", "readr", "tidyr", "tibble", "ggplot2", "tidyverse", "dplyr", "plyr", "metafor", "metadat", "Matrix", "meta", "GeneNet", "fdrtool", "longitudinal", "data.table", "corpcor"), 
+                 dependencies = TRUE)
+                 
+                 
+# Install geomnet from GitHub
+devtools::install_github("sctyner/geomnet")
+
+# Install space from GitHub
+devtools::install_github("cran/space")     
+
+# Install Bioconductor packages
+BiocManager::install("GEOquery")
+BiocManager::install("DExMA")
+
+```
+Install MetaPcor from GitHub
+```{r}
+devtools::install_github("gmanios/MetaPcor") 
+```
+
+
