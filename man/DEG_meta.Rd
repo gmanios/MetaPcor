@@ -2,7 +2,9 @@
 \alias{DEG_meta}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to do ... ~~
+%%  ~~function Differential expression analysis, which keeps only the statistically 
+significant genes from a given set of gene expression studies 
+ ~~
 }
 \description{
 Differential expression analysis, which keeps only the statistically 
