@@ -2,7 +2,8 @@
 \alias{volc_plot}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to do ... ~~
+%%  ~~ function which produces an interactive volcano plot with the Plotly package 
+} ~~
 }
 \description{
   A function which produces an interactive volcano plot with the Plotly package 
