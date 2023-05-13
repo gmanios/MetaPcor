@@ -2,7 +2,7 @@
 \alias{my_meta}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to do ... ~~
+%%  ~~function to  perform meta-analysis of partial correlations ~~
 }
 \description{
 A function that performs meta-analysis of partial correlations
