@@ -2,7 +2,7 @@
 \alias{network_plot}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to do ... ~~
+%%  ~~function to plot an interactive causal association gene netowrk with the GraphViz package... ~~
 }
 \description{
  A function which plots an interactive causal association gene netowrk with the GraphViz package
