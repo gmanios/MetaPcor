@@ -1,38 +1,35 @@
 \name{my_meta}
 \alias{my_meta}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to  perform meta-analysis of partial correlations ~~
+  \code{my_meta}: Perform meta-analysis of partial correlations
 }
 \description{
-A function that performs meta-analysis of partial correlations
+  A function that performs meta-analysis of partial correlations.
 }
 \usage{
-  my_meta(correlations, method)
-  }
-%- maybe also 'usage' for other objects documented here.
+  \code{my_meta(correlations, method)}
+}
 \arguments{
   \item{correlations}{
-A partial correlation data.table object, which occurs from the results of the 
-partial_neighborhood or the partial_shrinkage functions 
-}
-
+    A \code{partial correlation} \code{data.table} object, obtained from the results of the \code{partial_neighborhood} or \code{partial_shrinkage} functions.
+  }
+  
   \item{method}{
- Meta-analysis method to calculate the effect sizes ('random' or 'fixed')
-}
-
+    Meta-analysis method to calculate the effect sizes. Should be either \code{"random"} or \code{"fixed"}.
+  }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+  This function performs a meta-analysis of partial correlations using the specified method.
 }
 \value{
-  A data.table containing the results of the meta-analysis
+  A \code{data.table} object containing the results of the meta-analysis.
 }
 \references{
-%% ~put references to the literature/web site here ~
+  % Add references to the literature or website here.
 }
 \author{
-Ioanna V. Sasilioglou, Georgios A. Manios, Polymnia V. Gkoumplia, Panagiota I. Kontou, Pantelis G. Bagos* (*correspondence to : pbagos@compgen.org)}
+  Ioanna V. Sasilioglou, Georgios A. Manios, Polymnia V. Gkoumplia, Panagiota I. Kontou, Pantelis G. Bagos* (*correspondence to: \email{pbagos@compgen.org})
+}
 \note{
 %%  ~~further notes~~
 }
