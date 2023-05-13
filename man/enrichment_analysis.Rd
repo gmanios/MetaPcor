@@ -1,7 +1,9 @@
 \name{enirchment_analysis}
 \alias{enirchment_analysis}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{
+\title{ 
+  A function to conduct enrichment analysis with the statistically
+significant genes that occured from the meta-analysis
 }
 \description{
 A function to conduct enrichment analysis with the statistically
