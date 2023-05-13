@@ -2,7 +2,8 @@
 \alias{pcor_shrinkage}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-%%  ~~function to do ... ~~
+%%   A function to calculate sparse partial correlation estimation with the
+shrinkage method for each study.
 }
 \description{
  A function to calculate sparse partial correlation estimation with the
