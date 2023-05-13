@@ -3,7 +3,7 @@ Type: Package
 Title: Meta-analysis of gene expression using partial correlation as effect size
 Version: 0.1.0
 Author: Ioanna V. Sasilioglou, Georgios A. Manios, Polymnia V. Gkoumplia, Panagiota I. Kontou, Pantelis G. Bagos* 
-Maintainer: pbagos@compgen.org
+Maintainer: Pantelis Bagos pbagos@compgen.org
 Description: This package performs meta-analysis of gene expression studies using partial correlation as effect size, to provide the means to construct a causal association gene network
 License: GPL-3
 Encoding: UTF-8
