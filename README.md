@@ -9,7 +9,7 @@ Web version of MetaPcor available at : http://rs.dib.uth.gr:3839/metapcor/metapc
 
 ## Installation Guide
 
-First of all, make sure the required packages that are metnioned above are installed. 
+First of all, make sure the required packages that are metnioned below are installed. 
 
 Install the required packages
 
