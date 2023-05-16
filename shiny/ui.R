@@ -2,6 +2,7 @@ library(shiny)
 source('fun_test.R')
 library(igraph)
 library(shinycssloaders)
+library(shinyjs)
 #library(networkD3)
 # Define UI for dataset viewer app ----
 ui <- fluidPage(
@@ -122,43 +123,61 @@ ui <- fluidPage(
       verbatimTextOutput("oid1"),
       conditionalPanel(condition="$('html').hasClass('shiny-busy')",
                        tags$div(id = "loading-message",
-                                           style = "position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                                style = "position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
                                                     z-index: 10000; background-color: rgba(255, 255, 255, 0.7);
                                                     padding: 20px; border-radius: 10px;",
-                                           tags$p("Loading...", style = "font-size: 18px; font-weight: bold; text-align: center;"))),
+                                tags$p("Loading...", style = "font-size: 18px; font-weight: bold; text-align: center;"))),
 
 
 
       DT::dataTableOutput("final_head"),
 
 
-      downloadButton("downloadData", "Download meta-analysis results"),
-
+      # downloadButton("downloadData", "Download meta-analysis results"),
+      conditionalPanel(condition = "input.execute > 0",
+                       downloadButton("downloadData", "Download meta-analysis results")),
       DT::dataTableOutput("ea_results"),
 
-      downloadButton("downloadEAData", "Download Enrichment analysis results"),
+      # downloadButton("downloadEAData", "Download Enrichment analysis results"),
+      # downloadButton("downloadEAData", "Download Enrichment analysis results",
+      #                conditionalPanel(condition = "input.execute > 0")),
+
+      conditionalPanel(condition = "input.ea_option =='YES'",
+                       downloadButton("downloadEAData", "Download Enrichment analysis results")),
+      conditionalPanel(condition = "input.execute > 0",
+                      tabsetPanel(
+                        tabPanel("Network",
+                                 visNetworkOutput('network'),
+                                 downloadButton("downloadPlot", "Download Network")
+
+                        ),
+                        tabPanel("Volcano Plot",
+                                 plotlyOutput("volc_plot")
+                        ),
+
+                        tabPanel("Manhattan Plot",
+                                 plotlyOutput("manhattan_plot")
+
+                        ),
+
+                      ),
+                      # conditionalPanel(
+                      # condition = "input.execute > 0",
+                      # downloadButton("downloadPlot", "Download Network"))
+                      ),
+
+                      ),
 
 
-      tabsetPanel(
-        tabPanel("Network",
-                 visNetworkOutput('network')
-        ),
+      # downloadButton("downloadPlot", "Download Network"),
 
-        tabPanel("Volcano Plot",
-                 plotlyOutput("volc_plot")
-        ),
-
-        tabPanel("Manhattan Plot",
-                 plotlyOutput("manhattan_plot")
-
-        ),
-
-      ),
-
-      downloadButton("downloadPlot", "Download Network"),
+      # downloadButton("downloadPlot", "Download Network",
+      #                conditionalPanel(condition = "input.plotTabs == 'Network'")),
+      # conditionalPanel(
+      # condition = "input.tabset == 'Network'",
+      # shinyjs::hidden(downloadButton("downloadPlot", "Download Network"))),
       # downloadButton("downloadVolcPlot", "Download Volcano plot"),
       # Output: Verbatim text for data summary ----
       # Output: HTML table with requested number of observations ----
     )
   )
-)
