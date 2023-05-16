@@ -26,7 +26,7 @@ ui <- fluidPage(
       # Change sidebar color
       tags$style(".well {background-color:#EBECF0;}"),
 
-      helpText("Choose your analysis settings to proceed"),
+      helpText("Upload your file(s) here to proceed"),
       # helpText("For partial correlation meta-analysis, this is the proposed input"),
       #
       #
@@ -94,6 +94,7 @@ ui <- fluidPage(
       selectInput(inputId = "ea_option",
                   label = "Enrichment Analysis:",
                   choices = c("NO","YES")),
+      helpText("Volcano plot options. When the Volcano plot is produced, you can change these values dynamically"),
 
       # Input: Numeric entry for number of obs to view ----
       numericInput(inputId = "coeff_volc_plot",
@@ -142,7 +143,7 @@ ui <- fluidPage(
       # downloadButton("downloadEAData", "Download Enrichment analysis results",
       #                conditionalPanel(condition = "input.execute > 0")),
 
-      conditionalPanel(condition = "input.ea_option =='YES'",
+      conditionalPanel(condition = "input.ea_option =='YES' && input.execute > 0",
                        downloadButton("downloadEAData", "Download Enrichment analysis results")),
       conditionalPanel(condition = "input.execute > 0",
                       tabsetPanel(
