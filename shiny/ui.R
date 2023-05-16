@@ -148,8 +148,9 @@ ui <- fluidPage(
       conditionalPanel(condition = "input.execute > 0",
                       tabsetPanel(
                         tabPanel("Network",
-                                 visNetworkOutput('network'),
-                                 downloadButton("downloadPlot", "Download Network")
+                                 downloadButton("downloadPlot", "Download Network"),
+                                 visNetworkOutput('network')
+
 
                         ),
                         tabPanel("Volcano Plot",
