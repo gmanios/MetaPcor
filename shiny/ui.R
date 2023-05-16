@@ -61,16 +61,16 @@ ui <- fluidPage(
       # Input: Selector for choosing dataset ----
       selectInput(inputId = "option",
                   label = "Choose an option:",
-                  choices = c("Partial correlation meta-analysis with thresholds", "Partial correlation meta-analysis","DE and partial correlation meta-analysis")),
+                  choices = c("Partial correlation meta-analysis","Partial correlation meta-analysis with thresholds" ,"DE and partial correlation meta-analysis")),
 
 
       helpText("Keep the statistically significant correlations to proceed in the meta-analysis"),
 
-      selectInput(inputId = "significant",
-                  label = "Significant:",
-                  choices = c("FALSE","TRUE")),
+      # selectInput(inputId = "significant",
+      #             label = "Significant:",
+      #             choices = c("FALSE","TRUE")),
 
-      conditionalPanel(condition = "input.significant == 'TRUE'",
+      conditionalPanel(condition = "input.option == 'Partial correlation meta-analysis with thresholds'",
                        numericInput(inputId = "pvalue_thres",
                                     label = "p-value threshold:",
                                     value = 0.01),
@@ -92,7 +92,7 @@ ui <- fluidPage(
       # Input: Selector for choosing dataset ----
       selectInput(inputId = "ea_option",
                   label = "Enrichment Analysis:",
-                  choices = c("YES", "NO")),
+                  choices = c("NO","YES")),
 
       # Input: Numeric entry for number of obs to view ----
       numericInput(inputId = "coeff_volc_plot",
