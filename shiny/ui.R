@@ -65,7 +65,6 @@ ui <- fluidPage(
                   choices = c("Partial correlation meta-analysis","Partial correlation meta-analysis with thresholds" ,"DE and partial correlation meta-analysis")),
 
 
-      helpText("Keep the statistically significant correlations to proceed in the meta-analysis"),
 
       # selectInput(inputId = "significant",
       #             label = "Significant:",
