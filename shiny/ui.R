@@ -128,14 +128,20 @@ ui <- fluidPage(
                                                     padding: 20px; border-radius: 10px;",
                                 tags$p("Loading...", style = "font-size: 18px; font-weight: bold; text-align: center;"))),
 
-
-
+      # downloadButton("downloadData", "Download meta-analysis results"),
+      conditionalPanel(condition = "input.execute > 0",
+                       h4('Meta-analysis results')),
       DT::dataTableOutput("final_head"),
 
 
       # downloadButton("downloadData", "Download meta-analysis results"),
       conditionalPanel(condition = "input.execute > 0",
                        downloadButton("downloadData", "Download meta-analysis results")),
+
+      # downloadButton("downloadData", "Download meta-analysis results"),
+      conditionalPanel(condition = "input.ea_option =='YES' && input.execute > 0",
+                       h4('Enrichment analysis results')),
+
       DT::dataTableOutput("ea_results"),
 
       # downloadButton("downloadEAData", "Download Enrichment analysis results"),
@@ -143,8 +149,12 @@ ui <- fluidPage(
       #                conditionalPanel(condition = "input.execute > 0")),
 
       conditionalPanel(condition = "input.ea_option =='YES' && input.execute > 0",
+
                        downloadButton("downloadEAData", "Download Enrichment analysis results")),
       conditionalPanel(condition = "input.execute > 0",
+
+
+                      h4('Plots'),
                       tabsetPanel(
                         tabPanel("Network",
                                  downloadButton("downloadPlot", "Download Network"),
