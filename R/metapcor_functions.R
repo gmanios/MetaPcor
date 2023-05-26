@@ -890,9 +890,7 @@ DE_analysis <- function(folder_path,case,control, fold_threshold,p_value_thresho
     
     
     
-    ##keep the max of means
-    limit = max(group1, group2)
-    #limit
+
     
     # Compute fold-change for biological significance
     # Difference between the means of the two conditions
