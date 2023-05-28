@@ -136,8 +136,15 @@ server <- function(input, output) {
 
       }
       else{
-        print("OK")
-        final<- meta_pcor(file_names = file_list, option=as.character(input$option), method = "sparse", meta_method= "random", pvalue_thres = input$pvalue_thres, fdr_thres = input$fdr_thres, coef_thres = input$coef_thres,l1  = input$l1 ,l2 = 0, norm_data = input$norm_data, norm_method = input$norm_method )
+
+        if (input$model == "Random Effects model")
+        {
+          model = 'random'
+        }
+        else{
+          model = 'fixed'
+        }
+        final<- meta_pcor(file_names = file_list, option=as.character(input$option), method = "sparse", meta_method= model, pvalue_thres = input$pvalue_thres, fdr_thres = input$fdr_thres, coef_thres = input$coef_thres,l1  = input$l1 ,l2 = 0, norm_data = input$norm_data, norm_method = input$norm_method )
         print(final)
 
       }
