@@ -80,12 +80,15 @@ ui <- fluidPage(
                        numericInput(inputId = "coef_thres",
                                     label = "Coefficient threshold:",
                                     value = NULL)),
-
+      # Input: Selector for choosing dataset ----
+      selectInput(inputId = "model",
+                  label = "Choose meta-analysis model:",
+                  choices = c("Random Effects model","Fixed Effects model")),
 
       # Input: Numeric entry for number of obs to view ----
       numericInput(inputId = "l1",
                    label = "l1 (Norm Penalty):",
-                   value = 0.8),
+                   value = 0.7),
 
 
 
@@ -165,11 +168,9 @@ ui <- fluidPage(
                         tabPanel("Volcano Plot",
                                  plotlyOutput("volc_plot")
                         ),
-
                         tabPanel("Manhattan Plot",
-                                 plotlyOutput("manhattan_plot")
+                                                  plotlyOutput("manhattan_plot"),)
 
-                        ),
 
                       ),
                       # conditionalPanel(
