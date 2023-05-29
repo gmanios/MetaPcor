@@ -122,7 +122,7 @@ ui <- fluidPage(
 
     mainPanel(
 
-      h4('You entered: '),
+      h4('Welcome to MetaPcor! '),
       verbatimTextOutput("oid1"),
       conditionalPanel(condition="$('html').hasClass('shiny-busy')",
                        tags$div(id = "loading-message",
