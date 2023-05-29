@@ -74,25 +74,35 @@ server <- function(input, output) {
   output$oid1 <- renderPrint({
     cat("MetaPcor: A package for meta-analysis of Gene Expression studies with partial correlation as effect size\n\n")
 
-    cat("Analysis Option:\n")
-    print(input$option)
+    cat("Choose the settings of the sidebar panel to proceed... \n\n")
+    # print(input$option)
 
-    cat("Significant:\n")
-    print(input$significant)
-    cat("P-value threshold:\n")
-    print(input$pvalue_thres)
-    cat("FDR threshold:\n")
-    print(input$fdr_thres)
-    cat("Coefficient threshold:\n")
-    print(input$coef_thres)
+    cat("As an example, we provide two files to be downloaded. \n\n")
+    cat("A brief explanation of the available meta-analysis options \n\n")
+
+    # print(input$significant)
+    cat(" (1) Partial correlation meta-analysis: Meta-analysis of partial correlation coefficients \n\n")
+    cat(" (2) Partial correlation meta-analysis with thresholds: Meta-analysis of partial correlation coefficients
+    using thresholds for correlation coefficients, p-value or fdr.
+    You can leave a field blank if you do not want to use it. \n\n")
+
+    cat(" (3) DE Partial correlation meta-analysis (for case-control studies). First Differential Expression is performed
+    and then a meta-analysis of partial correlation coefficients of the DEGs is conducted.
+   \n\n")
+
+    # print(input$pvalue_thres)
+    # # cat("FDR threshold:\n")
+    # print(input$fdr_thres)
+    # # cat("Coefficient threshold:\n")
+    # print(input$coef_thres)
 
 
-    cat("l1:\n")
-    print(input$l1)
+    # cat("l1:\n")
+    # print(input$l1)
 
 
-    cat("Input Files\n")
-    print(input$upload)
+    # cat("Input Files\n")
+    # print(input$upload)
 
 
 
