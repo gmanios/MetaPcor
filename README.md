@@ -47,17 +47,6 @@ Install MetaPcor from GitHub
 devtools::install_github("gmanios/MetaPcor") 
 ```
 
-## Brief explanation of the available meta-analysis options
- 
-
- (1) Partial correlation meta-analysis: Meta-analysis of partial correlation coefficients 
-
- (2) Partial correlation meta-analysis with thresholds: Meta-analysis of partial correlation coefficients
-    using thresholds for correlation coefficients, p-value or fdr.
-    You can leave a field blank if you do not want to use it. 
-
- (3) DE Partial correlation meta-analysis (for case-control studies). First Differential Expression is performed
-    and then a meta-analysis of partial correlation coefficients of the DEGs is conducted.
 
 ## Examples 
 
