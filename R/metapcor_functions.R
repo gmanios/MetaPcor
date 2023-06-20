@@ -569,20 +569,11 @@ meta_pcor <- function(folder_path=NULL, GEO_names=NULL, GPL_list= NULL, target_n
   # Meta-analysis and partial correlation meta-analysis (folderpath needed)
   if (option == 4 ){
     
-    # Meta-analysis with DExMA
+    # Meta-analysis with the DEGs of the studies
     
-    DEG_simple <- DE_analysis(folder_path = value6 ,case = 'CASE', control = 'CONTROL', l1 = 0.6 , fold_threshold = 0.05, p_value_threshold = 0.05 )
+    DEG_simple <- DE_analysis(folder_path = value6 ,case = 'CASE', control = 'CONTROL', l1 = 0.6 , fold_threshold = 0.0, p_value_threshold = 0.05 )
     
-    # 
-    # # Calculate partial correlation without thresholds 
-    # 
-    #   
-    # pcor_list <- pcor_neighborhood(list_of_files = list_of_studies, l1 = value4, l2 = value5, significant=FALSE, pvalue_thres=value1, fdr_thres=value2, coef_thres=value3)      
-    # 
-    # 
-    # #Perform meta-analysis of correlations coefficients
-    # 
-    # meta_cor  <- my_meta(correlations = pcor_list, method=meta_method)
+
     
     return(DEG_simple)
     
