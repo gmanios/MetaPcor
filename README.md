@@ -39,7 +39,6 @@ devtools::install_github("cran/space")
 
 # Install Bioconductor packages
 BiocManager::install("GEOquery")
-BiocManager::install("DExMA")
 
 ```
 Install MetaPcor from GitHub
