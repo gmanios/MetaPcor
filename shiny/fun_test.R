@@ -21,6 +21,7 @@ library(igraph)
 library(purrr)
 library(readxl)
 memory.limit(size = 1000000000000000000000000000)
+setDTthreads(150)
 
 options(repos = BiocManager::repositories())
 
@@ -112,7 +113,7 @@ load_GSE_data <- function(file_names){
     study_t<- study_t[-1,]
     study_t<- as.data.table(study_t)[, lapply(.SD, as.numeric)]
 
-    print(study_t)
+    # print(study_t)
     list_of_files<- append(list_of_files,list(as.data.table(study_t)))
   }
 
@@ -191,11 +192,11 @@ pcor_neighborhood<-function(list_of_files, l1, l2=0, significant, pvalue_thres=N
   pcor_list<-list()
 
 
-  print(significant)
+  # print(significant)
   for(i in 1:length(list_of_files)){
-    print(head(t(list_of_files[[i]])))
-    print(l1)
-    print(l2)
+    # print(head(t(list_of_files[[i]])))
+    # print(l1)
+    # print(l2)
     pcor1<-space.neighbor(list_of_files[[i]], lam1=l1, lam2=l2)$ParCor
     colnames(pcor1)<-rownames(pcor1)<- colnames(list_of_files[[i]])
     #pcor1<-melt(pcor1)
@@ -536,7 +537,7 @@ meta_pcor <- function(file_names,  option, method, meta_method= "random", pvalue
   if (norm_data == 'YES'){
     list_of_files2 <- lapply(list_of_files2, normalize_gse, value8)
   }
-  print(list_of_files2)
+  # print(list_of_files2)
   if (option =="Pearson correlation and partial correlation meta-analysis"){
     ##################################################
     #                   Option 1                     #
@@ -664,9 +665,9 @@ enrichment_analysis <-function (file){
   DEGs_list_from = newdata$from
   DEGs_list_to = newdata$to
 
-  print(DEGs_list_to)
+  # print(DEGs_list_to)
   DEGs = unique(c(DEGs_list_to,DEGs_list_from))
-  print(DEGs)
+  # print(DEGs)
   # enrichment analysis
   # gp_from = gost(DEGs_list_from, organism = "hsapiens")
   # gp_to = gost(DEGs_list_to, organism = "hsapiens")
@@ -784,8 +785,8 @@ DE_analysis <- function(list_of_studies,case,control, fold_threshold,p_value_thr
     controls <- log2(controls)
     cases <- log2(cases)
 
-    print(cases)
-    print(controls)
+    # print(cases)
+    # print(controls)
     # Calculate the means of each group
 
     group1 <- apply(t(cases), 1, mean)
