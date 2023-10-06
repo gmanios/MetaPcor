@@ -23,6 +23,8 @@ library(readxl)
 library(matrixcalc)
 library(Cairo)
 library(networkD3)
+
+setDTthreads(150)
 options(bitmapType='cairo')
 memory.limit(size = 100000)
 #Limit of each file for server : 800MB for each file
@@ -142,7 +144,7 @@ server <- function(input, output) {
       {
 
         # Insert DE_analysis
-        final <- DE_analysis(file_list,case ='CASE',control= 'CONTROL', fold_threshold = 0, p_value_threshold = 0.05, l1 = input$l1)
+        final <- DE_analysis(file_list,case ='CASE',control= 'CONTROL', fold_threshold = 0.0, p_value_threshold = 0.05, l1 = input$l1)
 
       }
       else{
