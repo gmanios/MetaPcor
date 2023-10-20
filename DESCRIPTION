@@ -12,7 +12,7 @@ Suggests:
     knitr,
     rmarkdown
 Depends:
-    R (>= 4.2.3)  # Replace x.y.z with the minimum R version your package requires
+    R (>= 4.2.3)   
 Imports:
     readxl,
     igraph,
