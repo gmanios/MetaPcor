@@ -2,6 +2,7 @@ Package: MetaPcor
 Type: Package
 Title: Meta-analysis of gene expression using partial correlation as effect size
 Version: 0.1.0
+Maintainer: Pantelis Bagos <pbagos@compgen.org>
 Author: Ioanna V. Sasilioglou, Georgios A. Manios, Polymnia V. Gkoumplia, Panagiota I. Kontou, Pantelis G. Bagos*
 Description: This package performs meta-analysis of gene expression studies using partial correlation as effect size, to provide the means to construct a causal association gene network.
 License: GPL-3
@@ -14,6 +15,7 @@ Suggests:
 Depends:
     R (>= 4.2.3)   
 Imports:
+    GEOquery,
     readxl,
     igraph,
     visNetwork,
@@ -43,7 +45,9 @@ Imports:
     fdrtool,
     longitudinal,
     data.table,
-    corpcor
+    corpcor,
+    space,
+    geomnet
 Remotes:
     github::sctyner/geomnet,
     github::cran/space
