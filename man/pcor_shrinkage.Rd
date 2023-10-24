@@ -1,5 +1,7 @@
 \name{pcor_shrinkage}
 \alias{pcor_shrinkage}
+\encoding{UTF-8}
+
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 %%   A function to calculate sparse partial correlation estimation with the
@@ -63,5 +65,6 @@ Ioanna V. Sasilioglou, Georgios A. Manios, Polymnia V. Gkoumplia, Panagiota I. K
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-shrinkage_partial_corr <- pcor_shrinkage(list_of_files, significant = TRUE, pvalue_thres = 0.05)
+\dontrun{shrinkage_partial_corr <- pcor_shrinkage(list_of_files, significant = TRUE, pvalue_thres = 0.05)
+}
 }

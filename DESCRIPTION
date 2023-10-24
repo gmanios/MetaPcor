@@ -1,6 +1,7 @@
 Package: MetaPcor
 Type: Package
-Title: Meta-analysis of gene expression using partial correlation as effect size
+Title: Meta-analysis of gene expression using partial correlation as
+        effect size
 Version: 0.1.0
 Maintainer: Pantelis Bagos <pbagos@compgen.org>
 Author: Ioanna V. Sasilioglou, Georgios A. Manios, Polymnia V. Gkoumplia, Panagiota I. Kontou, Pantelis G. Bagos*
@@ -8,47 +9,13 @@ Description: This package performs meta-analysis of gene expression studies usin
 License: GPL-3
 Encoding: UTF-8
 NeedsCompilation: no
-Packaged: 2022-11-29 10:55:11 UTC; GManios
-Suggests: 
-    knitr,
-    rmarkdown
-Depends:
-    R (>= 4.2.3)   
-Imports:
-    GEOquery,
-    readxl,
-    igraph,
-    visNetwork,
-    plotly,
-    GGally,
-    ggrepel,
-    gprofiler2,
-    matrixcalc,
-    ff,
-    bit,
-    DescTools,
-    forcats,
-    stringr,
-    purrr,
-    readr,
-    tidyr,
-    tibble,
-    ggplot2,
-    tidyverse,
-    dplyr,
-    plyr,
-    metafor,
-    metadat,
-    Matrix,
-    meta,
-    GeneNet,
-    fdrtool,
-    longitudinal,
-    data.table,
-    corpcor,
-    space,
-    geomnet
-Remotes:
-    github::sctyner/geomnet,
-    github::cran/space
+Packaged: 2023-10-24 14:54:49 UTC; GManios
+Suggests: knitr, rmarkdown
+Depends: R (>= 4.2.2), GEOquery
+Imports: GEOquery, readxl, igraph, visNetwork, plotly, GGally, ggrepel,
+        gprofiler2, matrixcalc, ff, bit, DescTools, forcats, stringr,
+        purrr, readr, tidyr, tibble, ggplot2, tidyverse, dplyr, plyr,
+        metafor, metadat, Matrix, meta, GeneNet, fdrtool, longitudinal,
+        data.table, corpcor, space, geomnet
+Remotes: github::sctyner/geomnet, github::cran/space
 VignetteBuilder: knitr

@@ -47,13 +47,15 @@
   Returns the meta-analysis results as a data.table.
 }
 \examples{
-  # Example usage of DE_analysis function
-  folder_path <- "/path/to/gene/expression/files"
-  case <- "CASE"
-  control <- "CONTROL"
-  fold_threshold <- 0
-  p_value_threshold <- 0.05
-  l1 <- 0.8
-  
-  result <- DE_analysis(folder_path, case, control, fold_threshold, p_value_threshold, l1)
+  \dontrun{
+    # Example usage of DE_analysis function
+    folder_path <- "/path/to/gene/expression/files"
+    case <- "CASE"
+    control <- "CONTROL"
+    fold_threshold <- 0
+    p_value_threshold <- 0.05
+    l1 <- 0.8
+
+    result <- DE_analysis(folder_path, case, control, fold_threshold, p_value_threshold, l1)
+  }
 }

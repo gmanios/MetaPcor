@@ -1,13 +1,15 @@
 \name{network_plot}
 \alias{network_plot}
+\encoding{UTF-8}
+
 \title{
-  \code{network_plot}: Plot an interactive causal association gene network with the GraphViz package
+  Plot an interactive causal association gene network with the GraphViz package
 }
 \description{
   A function that plots an interactive causal association gene network using the GraphViz package.
 }
 \usage{
-  \code{network_plot(x)}
+  network_plot(x)
 }
 \arguments{
   \item{x}{
@@ -21,19 +23,21 @@
   An interactive network plot of the causal association gene network.
 }
 \references{
-  % Add references to the literature or website here.
+  % Add references if any.
 }
 \author{
-  Ioanna V. Sasilioglou, Georgios A. Manios, Polymnia V. Gkoumplia, Panagiota I. Kontou, Pantelis G. Bagos* (*correspondence to: \email{pbagos@compgen.org})
+  Ioanna V. Sasilioglou, Georgios A. Manios, Polymnia V. Gkoumplia, Panagiota I. Kontou, Pantelis G. Bagos* (\emph{Correspondence to:} \email{pbagos@compgen.org})
 }
 \note{
-  % Add any additional notes here.
+  % Add notes if any.
 }
 \seealso{
-  % Add objects to see also as \code{\link{help}}.
+  % Add related functions or packages here.
 }
 \examples{
-  # Network plot
-  network_plot(meta_pcor_results)
+ \dontrun{  # Network plot example
+  network_plot(meta_pcor_results)}
+
 }
-\keyword{functions}
+\keyword{network-analysis}
+\keyword{gene-network}

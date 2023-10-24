@@ -1,4 +1,5 @@
 \name{meta_pcor}
+\encoding{UTF-8}
 
 \alias{meta_pcor}
 
@@ -11,7 +12,7 @@ The function accepts data from multiple studies as input and outputs a meta-anal
 }
 \usage{
 meta_pcor(file_names, option, method, meta_method= "random",
-pvalue_thres = NULL, fdr_thres = NULL, 
+pvalue_thres = NULL, fdr_thres = NULL,
 coef_thres = NULL,l1 = NULL ,l2 = NULL, norm_data = NULL, norm_method = NULL)
 }
 \arguments{
@@ -72,7 +73,8 @@ Ioanna V. Sasilioglou, Georgios A. Manios, Polymnia V. Gkoumplia, Panagiota I. K
 \seealso{
     \link{https://biit.cs.ut.ee/gprofiler/gost}}
 \examples{
-metapcor_result <- meta_pcor(GEO_names=c("GSE76427"),
+
+\dontrun{metapcor_result <- meta_pcor(GEO_names=c("GSE76427"),
 target_namespace = c('ILLUMINA_HUMANHT_12_V4'), option = 2,
 method = "sparse", meta_method = "random",
 pvalue_thres = 0.01, l1 = 0.8, l2 = 0)
@@ -80,6 +82,8 @@ pvalue_thres = 0.01, l1 = 0.8, l2 = 0)
 
 metapcor_result <- meta_pcor(folder_path = "/path/to/data/folder",
 option = 1, method = "sparse",meta_method = "random",l1 = 0.8, l2 = 0)
+}
+
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

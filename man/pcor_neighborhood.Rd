@@ -1,5 +1,7 @@
 \name{pcor_neighborhood}
 \alias{pcor_neighborhood}
+\encoding{UTF-8}
+
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 %%  A function to calculate sparse partial correlation estimation with
@@ -76,13 +78,21 @@ Ioanna V. Sasilioglou, Georgios A. Manios, Polymnia V. Gkoumplia, Panagiota I. K
    \link{https://github.com/cran/space}}
 
 \examples{
-# Calculate sparse partial correlation estimation with neighborhood selection approach method for each study
+\dontrun{
 
-sparse_partial_corr <- pcor_neighborhood(list_of_files = list_of_studies,
-l1 = 0.8, l2 = 0.0, significant = TRUE, pvalue_thres = 0.05)
+# Calculate sparse partial correlation estimation with
+# neighborhood selection approach method for each study
 
+sparse_partial_corr <- pcor_neighborhood(
+  list_of_files = list_of_studies,
+  l1 = 0.8,
+  l2 = 0.0,
+  significant = TRUE,
+  pvalue_thres = 0.05
+)
 }
 
+}
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory (show via RShowDoc("KEYWORDS")):
 % \keyword{ ~kwd1 }
