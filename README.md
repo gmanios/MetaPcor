@@ -89,8 +89,8 @@ ea_results
 
 # Network plot with GraphViz
 network_plot(pcor)
-
+ 
 # Volcano Plot
-volc_plot<- volc_plot_plotly(as.data.frame(pcor),pval_thres = 0.5,coeff_thres = 0.1)
+volc_plot<- volc_plot_plotly(as.data.frame(pcor),pval_thres = 0.01,coeff_thres = 0.2)
 volc_plot
 ```
