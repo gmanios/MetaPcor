@@ -78,9 +78,8 @@ volc_plot
 
 #Run MetaPcor with option 4 (DE Analysis and Partial correlation meta-analysis)
  
-pcor <- meta_pcor(folder_path = 'studies/' , option=4, method="sparse", meta_method= "random",l1  = 0.6 ,l2 = 0)
-
-
+pcor <- meta_pcor(folder_path = 'demo_files/DE/' , option=4, method="sparse", meta_method= "random",l1  = 0.6 ,l2 = 0)
+ 
 # Encrichment Analysis with gProfiler
 ea_results <- enrichment_analysis(as.data.frame(pcor))
 
