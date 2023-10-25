@@ -3,9 +3,44 @@
 MetaPcor : A package to conduct meta-analysis of co-expression networks using partial correlation as effect size
 
 Web version of MetaPcor available at : http://rs.dib.uth.gr:3839/metapcor/metapcor2023/
- 
+
+
+
+
 ## Installation Guide
- 
+
+First of all, make sure the required packages that are metnioned below are installed. 
+
+Install the required packages
+
+```R
+library(devtools)
+
+install.packages(c("readxl", "igraph", "visNetwork",
+                   "plotly", "GGally", "ggrepel",
+                   "gprofiler2", "matrixcalc", 
+                   "ff", "bit", "DescTools",
+                   "forcats", "stringr",
+                   "purrr", "readr",
+                   "tidyr", "tibble","ggplot2", 
+                   "tidyverse", "dplyr",
+                   "plyr", "metafor", "metadat", 
+                   "Matrix", "meta", "GeneNet",
+                   "fdrtool", "longitudinal", 
+                   "data.table", "corpcor"), 
+                 dependencies = TRUE)
+                 
+                 
+# Install geomnet from GitHub
+devtools::install_github("sctyner/geomnet")
+
+# Install space from GitHub
+devtools::install_github("cran/space")     
+
+# Install Bioconductor packages
+BiocManager::install("GEOquery")
+
+```
 Install MetaPcor from GitHub
 ```R
 devtools::install_github("gmanios/MetaPcor") 
@@ -57,7 +92,8 @@ network_plot(pcor)
 # Volcano Plot
 volc_plot<- volc_plot_plotly(as.data.frame(pcor),pval_thres = 0.5,coeff_thres = 0.1)
 volc_plot
- 
+
+
 ```
 
 ## Requirements

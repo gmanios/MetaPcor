@@ -9,7 +9,7 @@ Description: This package performs meta-analysis of gene expression studies usin
 License: GPL-3
 Encoding: UTF-8
 NeedsCompilation: no
-Packaged: 2023-10-24 14:54:49 UTC; GManios
+Packaged: 2023-10-25 12:47:03 UTC; GManios
 Suggests: knitr, rmarkdown
 Depends: R (>= 4.2.2), GEOquery
 Imports: GEOquery, readxl, igraph, visNetwork, plotly, GGally, ggrepel,
