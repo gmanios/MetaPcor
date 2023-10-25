@@ -51,7 +51,7 @@ volc_plot
 
 ```R 
 
-pcor <-  meta_pcor(folder_path = 'studies/' , option=3, method="sparse", meta_method= "random",l1  = 0.8 ,l2 = 0)
+pcor <-  meta_pcor(folder_path = 'demo_files/GSE_DEMO/' , option=3, method="sparse", meta_method= "random",l1  = 0.8 ,l2 = 0)
 
 
 #Uncoment to run
