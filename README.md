@@ -4,12 +4,6 @@ MetaPcor : A package to conduct meta-analysis of co-expression networks using pa
 
 Web version of MetaPcor available at : http://rs.dib.uth.gr:3839/metapcor/metapcor2023/
 
-
-
-
-## Web Version
-The web version of MetaPcor is available [here](http://rs.dib.uth.gr:3839/metapcor/metapcor2023/).
-
  
 
 ## Installation Guide
