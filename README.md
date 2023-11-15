@@ -23,6 +23,7 @@ devtools::install_github("gmanios/MetaPcor")
 ## Example 1 (Partial correlation meta-analysis with thresholds)
 
 ```R 
+library(MetaPcor)
 
 #Run MetaPcor with option 2 (Partial correlation meta-analysis with thresholds)
 pcor <- meta_pcor(GEO_names=c("GSE76427") ,target_namespace = c('ILLUMINA_HUMANREF_8_V3'), option=2, 
@@ -47,6 +48,7 @@ volc_plot
 ## Example 2 (Partial correlation meta-analysis without thresholds)
 
 ```R 
+library(MetaPcor)
 
 pcor <-  meta_pcor(folder_path = 'demo_files/GSE_DEMO/' , option=3, method="sparse", meta_method= "random",l1  = 0.8 ,l2 = 0)
 
@@ -72,6 +74,7 @@ volc_plot
 ## Example 3 (Differential Expression Analysis and Partial correlation meta-analysis)
 
 ```R
+library(MetaPcor)
 
 #Run MetaPcor with option 4 (DE Analysis and Partial correlation meta-analysis)
  
