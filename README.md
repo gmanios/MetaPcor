@@ -5,7 +5,8 @@
 
 MetaPcor : A package to conduct meta-analysis of co-expression networks using partial correlation as effect size
 
-Web version of MetaPcor available at : http://rs.dib.uth.gr:3839/metapcor/metapcor2023/ or http://195.251.108.211:3839/metapcor/metapcor2023/
+Web version of MetaPcor available at : http://rs.dib.uth.gr:3839/metapcor/metapcor2023/
+or http://195.251.108.211:3839/metapcor/metapcor2023/
 
  
 
