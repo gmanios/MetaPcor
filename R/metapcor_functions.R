@@ -770,26 +770,13 @@ volc_plot_plotly<- function(pcor,pval_thres,coeff_thres){
 }
 
 
-DE_analysis <- function(folder_path,case,control, fold_threshold,p_value_threshold,l1 ){
 
 
-  # Debug: Print the folder path to check if it's correct
-  print(paste("Folder path:", folder_path))
+DE_analysis <- function(list_of_studies,case,control, fold_threshold,p_value_threshold,l1,log_norm ){
 
   expr_mat = list()
-
-  # List all text files in the folder
-  list_of_studies = list.files(path = folder_path, pattern = '.txt', all.files = FALSE, full.names = TRUE)
-
-  # # Debug: Print the list_of_studies to verify
-  # print(paste("List of Studies:", list_of_studies))
-
-  # Check if the list is empty
-  if (length(list_of_studies) == 0) {
-    stop("list_of_studies is empty")
-  }
-
-
+  # list_of_studies = list.files(path = folder_path, pattern ='.xlsx', all.files=FALSE, full.names=TRUE)
+  #
   l1_value = l1
   for (i in 1:length(list_of_studies)){
     # Read the file
@@ -852,34 +839,36 @@ DE_analysis <- function(folder_path,case,control, fold_threshold,p_value_thresho
 
 
 
-    # Apply log2 scale in cases and controls
-    controls <- log2(controls)
-    cases <- log2(cases)
+    # #Apply log2 scale in cases and controls
+    if (log_norm == TRUE) {
+      controls <- log2(controls)
+      cases <- log2(cases)
+    }
+    # controls <- log2(controls)
+    # cases <- log2(cases)
 
-    # print(cases)
+     
     # print(controls)
     # Calculate the means of each group
 
     group1 <- apply(t(cases), 1, mean)
     group2 <- apply(t(controls), 1, mean)
+    
+   
 
-
-
-
-
+    
     # Compute fold-change for biological significance
     # Difference between the means of the two conditions
     fold = group1 - group2
-    #fold
-
-
+    #print(fold)
+   
 
 
 
     #pvalue
     pvalue = NULL # Empty list for the p-values
     tstat = NULL # Empty list of the t test statistics
-
+    p_adjusted = NULL
 
 
 
@@ -889,18 +878,21 @@ DE_analysis <- function(folder_path,case,control, fold_threshold,p_value_thresho
       pvalue[i] = t$p.value
       # Put the current t-statistic in the tstats list
       tstat[i] = t$statistic
+      #p_adjusted[i] <- p.adjust(t$p.value, method = "BH") # Using Benjamini-Hochberg method
+      
     }
-
+    # p_adjusted <- p.adjust(pvalue, method = "BH") # Using Benjamini-Hochberg method
+    
     #give your fold cutoff
     fold_cutoff = fold_threshold
     #give your pvalue cutoff
     pvalue_cutoff = p_value_threshold
 
-
+    df_fold = fold
     # Fold-change filter for biological significance
     filter1 = abs(fold) >= fold_threshold
-
-
+    # print(filter1)
+    # print(abs(fold))
     # P-value filter for statistical significance
     filter2 = pvalue <= pvalue_cutoff
 
@@ -934,6 +926,5 @@ DE_analysis <- function(folder_path,case,control, fold_threshold,p_value_thresho
   meta_cor  <- my_meta(correlations = pcor_list, method='random')
   return(meta_cor)
 }
-
 
 
