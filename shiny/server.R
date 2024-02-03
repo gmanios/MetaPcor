@@ -144,7 +144,7 @@ server <- function(input, output) {
       {
 
         # Insert DE_analysis
-        final <- DE_analysis(file_list,case ='CASE',control= 'CONTROL', fold_threshold = 0.0, p_value_threshold = 0.05, l1 = input$l1)
+        final <- DE_analysis(file_list,case ='CASE',control= 'CONTROL', fold_threshold = input$log2FC_threshold, p_value_threshold = 0.05, l1 = input$l1,log_norm = input$log2_norm)
 
       }
       else{
