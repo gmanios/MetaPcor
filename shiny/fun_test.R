@@ -714,7 +714,7 @@ network_plot <- function (file) {
 }
 
 
-DE_analysis <- function(list_of_studies,case,control, fold_threshold,p_value_threshold,l1 ){
+DE_analysis <- function(list_of_studies,case,control, fold_threshold,p_value_threshold,l1,log_norm ){
 
   expr_mat = list()
   # list_of_studies = list.files(path = folder_path, pattern ='.xlsx', all.files=FALSE, full.names=TRUE)
@@ -781,36 +781,36 @@ DE_analysis <- function(list_of_studies,case,control, fold_threshold,p_value_thr
 
 
 
-    # Apply log2 scale in cases and controls
-    controls <- log2(controls)
-    cases <- log2(cases)
+    # #Apply log2 scale in cases and controls
+    if (log_norm == TRUE) {
+      controls <- log2(controls)
+      cases <- log2(cases)
+    }
+    # controls <- log2(controls)
+    # cases <- log2(cases)
 
-    # print(cases)
+     
     # print(controls)
     # Calculate the means of each group
 
     group1 <- apply(t(cases), 1, mean)
     group2 <- apply(t(controls), 1, mean)
+    
+   
 
-
-
-    ##keep the max of means
-    limit = max(group1, group2)
-    #limit
-
+    
     # Compute fold-change for biological significance
     # Difference between the means of the two conditions
     fold = group1 - group2
-    #fold
-
-
+    #print(fold)
+   
 
 
 
     #pvalue
     pvalue = NULL # Empty list for the p-values
     tstat = NULL # Empty list of the t test statistics
-
+    p_adjusted = NULL
 
 
 
@@ -820,18 +820,21 @@ DE_analysis <- function(list_of_studies,case,control, fold_threshold,p_value_thr
       pvalue[i] = t$p.value
       # Put the current t-statistic in the tstats list
       tstat[i] = t$statistic
+      #p_adjusted[i] <- p.adjust(t$p.value, method = "BH") # Using Benjamini-Hochberg method
+      
     }
-
+    # p_adjusted <- p.adjust(pvalue, method = "BH") # Using Benjamini-Hochberg method
+    
     #give your fold cutoff
     fold_cutoff = fold_threshold
     #give your pvalue cutoff
     pvalue_cutoff = p_value_threshold
 
-
+    df_fold = fold
     # Fold-change filter for biological significance
     filter1 = abs(fold) >= fold_threshold
-
-
+    # print(filter1)
+    # print(abs(fold))
     # P-value filter for statistical significance
     filter2 = pvalue <= pvalue_cutoff
 
