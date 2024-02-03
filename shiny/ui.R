@@ -157,6 +157,15 @@ ui <- navbarPage(
                            numericInput(inputId = "coef_thres",
                                         label = "Coefficient threshold:",
                                         value = NULL)),
+          
+          conditionalPanel(condition = "input.option == 'DE and partial correlation meta-analysis'",
+                           selectInput(inputId = "log2_norm",
+                                       label = "Apply log tranformation:",
+                                       choices = c( "TRUE","FALSE")),
+                           numericInput(inputId = "log2FC_threshold",
+                                        label = "log2FC threshold:",
+                                        value = 1.0)),
+          
           # Input: Selector for choosing dataset ----
           selectInput(inputId = "model",
                       label = "Choose meta-analysis model:",
