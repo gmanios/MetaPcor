@@ -772,11 +772,26 @@ volc_plot_plotly<- function(pcor,pval_thres,coeff_thres){
 
 
 
-DE_analysis <- function(list_of_studies,case,control, fold_threshold,p_value_threshold,l1,log_norm ){
-
+DE_analysis <- function(folder_path,case,control, fold_threshold,p_value_threshold,l1,log_norm ){
+  
+  # Debug: Print the folder path to check if it's correct
+  print(paste("Folder path:", folder_path))
   expr_mat = list()
   # list_of_studies = list.files(path = folder_path, pattern ='.xlsx', all.files=FALSE, full.names=TRUE)
   #
+
+   # List all text files in the folder
+  list_of_studies = list.files(path = folder_path, pattern = '.txt', all.files = FALSE, full.names = TRUE)
+
+  # # Debug: Print the list_of_studies to verify
+  # print(paste("List of Studies:", list_of_studies))
+
+  # Check if the list is empty
+  if (length(list_of_studies) == 0) {
+    stop("list_of_studies is empty")
+  }
+
+
   l1_value = l1
   for (i in 1:length(list_of_studies)){
     # Read the file
