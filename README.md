@@ -79,7 +79,10 @@ library(MetaPcor)
 
 #Run MetaPcor with option 4 (DE Analysis and Partial correlation meta-analysis)
  
-pcor <- meta_pcor(folder_path = 'demo_files/DE/' , option=4, method="sparse", meta_method= "random",l1  = 0.6 ,l2 = 0)
+pcor = DE_analysis(folder_path = "demo_files/DE/",case ="CASE",control ="CONTROL", 
+fold_threshold = 1 ,p_value_threshold =0.05,l1 = 0.6 ,
+log_norm = 'FALSE')
+
  
 # Encrichment Analysis with gProfiler
 ea_results <- enrichment_analysis(as.data.frame(pcor))
